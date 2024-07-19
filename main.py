@@ -1,7 +1,14 @@
 from flet import *
 import flet as ft
+import classes
 
 def main(page: ft.Page):
+
+    # variaveis da coluna de informações
+    dados = Column()
+    array_novos_dados = []
+    array_intervalo = []
+    array_VF = []
 
     # page.adaptive = True
     coluna_tabelas = Container(
@@ -55,25 +62,7 @@ def main(page: ft.Page):
         expand=1,
         content=Column([
 
-            Container(
-                bgcolor=colors.BLACK54,
-                expand=3,
-                alignment=alignment.center,
-                border_radius=30,
-                padding=10,
-                content=Column(
-                    auto_scroll=True,
-                    adaptive=True,
-                    alignment=alignment.center,
-                    scroll=ft.ScrollMode.ALWAYS,
-                    expand=1,
-                    controls=[Row([Container(content=cl_novos_dados, expand=1), Container(content=cl_intervalo, expand=1), Container(content=cl_check_box)]), Container(
-                        alignment=alignment.center,
-                        content=CupertinoFilledButton(content=Text('+', size=30), on_click=lambda e: adicionar_linha(), border_radius=5, padding=padding.only(bottom=5))
-                    )]
-
-                )
-            ),
+            classes.tabela_dados(page, dados, array_novos_dados, array_intervalo, array_VF).tabela(),
             Container(
                 bgcolor=colors.BLACK54,
                 content=Text('Opa'),

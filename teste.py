@@ -8,7 +8,7 @@ def main(page: ft.Page):
     array_intervalo = []
     array_VF = []
 
-    def coluna_print():
+    def print_coluna_principal():
         for i in range(len(array_novos_dados)):
             print(f'{array_novos_dados[i].value},{array_intervalo[i].value},{array_VF[i].value},')
 
@@ -39,7 +39,7 @@ def main(page: ft.Page):
                 Row([Container(Text('Novos Dados', size=20, color=colors.BLACK), expand=1,), Container(Text('Intervalo', size=20, color=colors.BLACK), expand=1,), Container(Text('V/F', size=20, color=colors.BLACK), padding=padding.only(right=10)),],),
                 dados,
                 Row([Container(expand=1), IconButton(icon=icons.ADD_CIRCLE_OUTLINE_ROUNDED, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: adicionar_linha(), ), IconButton(icon=icons.REMOVE_CIRCLE_OUTLINE_ROUNDED, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: remover_linha()), Container(expand=1),
-                 IconButton(icon=icons.PLUS_ONE, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: coluna_print()), Container(expand=1),])
+                 IconButton(icon=icons.PLUS_ONE, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: print_coluna_principal()), Container(expand=1),])
 
             ],
             expand=1,
