@@ -1,53 +1,54 @@
 from flet import *
 import flet as ft
+import pandas as pd
+
 
 def main(page: ft.Page):
 
-    dados = Column()
-    array_novos_dados = []
-    array_intervalo = []
-    array_VF = []
+    tabela_teste = pd.read_excel('arquivos/excel_teste.xlsx', header=None)
+    def container_tabela(arquivo_tabela):
+        coluna_principal = Column()
 
-    def print_coluna_principal():
-        for i in range(len(array_novos_dados)):
-            print(f'{array_novos_dados[i].value},{array_intervalo[i].value},{array_VF[i].value},')
+        for index, row in arquivo_tabela.iterrows():
+            linha = []
+            for coluna in arquivo_tabela.columns:
+                valor = row[coluna]
+                linha.append(valor)
+            print(linha)
+            containers = Row()
+            for i in range(len(linha)):
+                containers.controls.append(Container(expand=1, content=Text(linha[i])))
+            coluna_principal.controls.append(Container(expand=1, content=containers))
 
 
-    def adicionar_linha():
-        array_novos_dados.append(TextField())
-        array_intervalo.append(TextField())
-        array_VF.append(Checkbox())
-        dados.controls.append(Row([Container(array_novos_dados[-1], expand=1, ),
-        Container(array_intervalo[-1], expand=1, ),
-        Container(array_VF[-1], padding=padding.only(right=10)), ], ),)
-        page.update()
 
-    def remover_linha():
-        array_novos_dados.pop()
-        array_intervalo.pop()
-        array_VF.pop()
-        dados.controls.pop()
+
 
         page.update()
-
-    tab = Container(
-        bgcolor=colors.AMBER,
-        expand=1,
-        padding=10,
-        content=Column(
-            [
-                Row([Container(Text('Novos Dados', size=20, color=colors.BLACK), expand=1,), Container(Text('Intervalo', size=20, color=colors.BLACK), expand=1,), Container(Text('V/F', size=20, color=colors.BLACK), padding=padding.only(right=10)),],),
-                dados,
-                Row([Container(expand=1), IconButton(icon=icons.ADD_CIRCLE_OUTLINE_ROUNDED, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: adicionar_linha(), ), IconButton(icon=icons.REMOVE_CIRCLE_OUTLINE_ROUNDED, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: remover_linha()), Container(expand=1),
-                 IconButton(icon=icons.PLUS_ONE, icon_color=colors.BLACK, icon_size=40, on_click=lambda e: print_coluna_principal()), Container(expand=1),])
-
-            ],
+        return Container(
+            border=border.all(5, color=colors.BLACK),
+            border_radius=30,
             expand=1,
-            scroll=ft.ScrollMode.ALWAYS,
-            auto_scroll=True,
+            content=coluna_principal
         )
+
+
+
+    coluna_tabelas = Container(
+        bgcolor=colors.BLUE_300,
+        padding=40,
+        expand=2,
+        content=Container(
+                    bgcolor=colors.BLACK54,
+                    expand=1,
+                    alignment=alignment.center,
+                    border_radius=30,
+                    content=container_tabela(tabela_teste),
+
+                ),
+
     )
 
-    page.add(tab)
+    page.add(coluna_tabelas)
 
 ft.app(main)

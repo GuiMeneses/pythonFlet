@@ -1,14 +1,20 @@
-from flet import *
-import flet as ft
-import classes
-def main(page: ft.Page):
-
-    dados = Column()
-    array_novos_dados = []
-    array_intervalo = []
-    array_VF = []
+import pandas as pd
 
 
-    page.add(classes.tabela_dados(page, dados, array_novos_dados, array_intervalo, array_VF).tabela())
+# Função para percorrer todas as células de uma tabela Excel
+def percorrer_celulas(caminho_arquivo):
+    # Leitura do arquivo Excel em um DataFrame
+    df = pd.read_excel(caminho_arquivo, engine='openpyxl', header=None)
 
-ft.app(main)
+    # Iterar sobre todas as células do DataFrame
+    for index, row in df.iterrows():
+        for coluna in df.columns:
+            valor = row[coluna]
+            print(f"Célula ({index}, {coluna}): {valor}")
+
+
+# Caminho do arquivo Excel
+caminho_arquivo = 'arquivos/excel_teste.xlsx'
+
+# Chamada da função para percorrer todas as células e imprimir seus valores
+percorrer_celulas(caminho_arquivo)

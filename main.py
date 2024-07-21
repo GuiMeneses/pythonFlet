@@ -8,7 +8,7 @@ def main(page: ft.Page):
     dados = Column()
     array_novos_dados = []
     array_intervalo = []
-    array_VF = []
+    array_vf = []
 
     # page.adaptive = True
     coluna_tabelas = Container(
@@ -40,19 +40,7 @@ def main(page: ft.Page):
 
     )
 
-    cl_novos_dados = Column()
-    cl_intervalo = Column()
-    cl_check_box = Column()
 
-    cl_novos_dados.controls.append(Text('Novos dados'))
-    cl_intervalo.controls.append(Text('Intervalo'))
-    cl_check_box.controls.append(Text('V/F'))
-
-    def adicionar_linha():
-        cl_novos_dados.controls.append(TextField())
-        cl_intervalo.controls.append(TextField())
-        cl_check_box.controls.append(Checkbox())
-        page.update()
 
 
 
@@ -62,7 +50,7 @@ def main(page: ft.Page):
         expand=1,
         content=Column([
 
-            classes.tabela_dados(page, dados, array_novos_dados, array_intervalo, array_VF).tabela(),
+            classes.TabelaDados(page, dados, array_novos_dados, array_intervalo, array_vf).tabela(),
             Container(
                 bgcolor=colors.BLACK54,
                 content=Text('Opa'),
