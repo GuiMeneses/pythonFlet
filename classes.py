@@ -1,5 +1,5 @@
 from flet import *
-import flet as ft
+import pandas as pd
 
 class TabelaDados:
     # Cria uma tabela de dados, 2 colunas com TextField() e uma com um Checkbox(), caso o Checkbox for verdadeiro o código interpretará a primeira coluna(coluna_novos_dados) como referências de célula, assim ela pegara os valores dessa celula da primeira planilha e passará para a segunda planilha na referências de célula que o usuário inseriu na segunda coluna.
@@ -65,7 +65,7 @@ class TabelaDados:
                              ])
                     ],
                         expand=1,
-                        scroll=ft.ScrollMode.ALWAYS,
+                        scroll=ScrollMode.ALWAYS,
 
                     ),
                 ],
@@ -73,3 +73,45 @@ class TabelaDados:
             )
         )
         return tab
+
+class BotaoFilePicker:
+
+    def __init__(self, page, icon_color=colors.BLACK, bgcolor=colors.TRANSPARENT, hover_color=colors.GREY_300):
+        self.page = page
+        self.arquivo_nome = 'Arquivo não selecionado'
+        self.dados_df = pd.read_excel('arquivos/excel_teste2.xlsx', header=None)
+        self.arquivo_caminho = 'Arquivo não selecionado'
+        self.botao = IconButton(
+            icon_color=icon_color,
+            hover_color=hover_color,
+            bgcolor=bgcolor,
+            icon=icons.FILE_PRESENT_SHARP,
+            on_click=lambda _: self.pick_files_dialog.pick_files(
+                allowed_extensions=["xlsx", "xls"],  # Permite apenas arquivos Excel
+                allow_multiple=False  # Permite selecionar apenas um arquivo
+            )
+        )
+        self.pick_files_dialog = FilePicker(on_result=self.pick_files_result)
+        self.page.overlay.append(self.pick_files_dialog)
+
+    def pick_files_result(self, e: FilePickerResultEvent):
+        if e.files:
+            file_path = e.files[0].path  # Pega o caminho arquivo selecionado
+            self.dados_df = pd.read_excel(file_path, header=None)  # Carrega o arquivo Excel em um DataFrame
+            self.arquivo_nome = f"{e.files[0].name}"
+            self.arquivo_caminho = f'{e.files[0].path}'
+            # Caso queira verificar os dados.
+            print(self.dados_df)
+            print(self.arquivo_nome)
+            print(self.arquivo_caminho)
+            self.page.update()
+
+
+
+
+
+
+
+
+
+

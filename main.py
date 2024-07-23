@@ -2,7 +2,7 @@ from flet import *
 import flet as ft
 import classes
 
-def main(page: ft.Page):
+def main(page: Page):
 
     # variaveis da coluna de informações
     dados = Column()
