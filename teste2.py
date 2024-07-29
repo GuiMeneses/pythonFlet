@@ -1,15 +1,17 @@
 from flet import *
 import pandas as pd
 
-import classes
+import classes, teste3
 
 
 def main(page: Page):
 
-    botao = classes.BotaoFilePicker(page)
-    page.theme_mode = ThemeMode.LIGHT
-    page.update()
-    page.add(botao.botao)
+    # page.theme_mode = ThemeMode.LIGHT
+    # botao = classes.BotaoFilePicker(page)
+    # nome = Text(botao.arquivo_nome)
+    # page.add(botao.botao, nome)
 
+    botao = teste3.example()
+    page.add(botao)
 
 app(target=main)

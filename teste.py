@@ -5,7 +5,6 @@ import classes
 
 def main(page: Page):
 
-    botao_file_picker = classes.BotaoFilePicker(page, hover_color=colors.with_opacity(opacity=0.4, color=colors.GREY_50))
 
     def cabecalho_tabela(titulo, botao):
         # Cabeçalho da tabela (Nome e file picker)
@@ -43,13 +42,14 @@ def main(page: Page):
             content=Row(controls=a, scroll=ScrollMode.ALWAYS)
         )
 
+    botao_file_picker = classes.BotaoFilePicker(page, hover_color=colors.with_opacity(opacity=0.4, color=colors.GREY_50))
+
     coluna_tabelas = Container(
         bgcolor=colors.BLUE_300,
         expand=2,
         content=Column([cabecalho_tabela(botao_file_picker.arquivo_nome, botao_file_picker.botao), container_tabela(botao_file_picker.dados_df),])
     )
 
-    page.update()
     page.add(coluna_tabelas)
 
 
