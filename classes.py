@@ -76,8 +76,11 @@ class TabelaDados:
 
 class BotaoFilePicker:
 
-    def __init__(self, page, icon_color=colors.BLACK, bgcolor=colors.TRANSPARENT, hover_color=colors.GREY_300):
+    def __init__(self, page, return_nome=None, return_arquivo=None, return_dados=None, icon_color=colors.BLACK, bgcolor=colors.TRANSPARENT, hover_color=colors.GREY_300):
         self.page = page
+        self.return_nome = return_nome
+        self.return_arquivo = return_arquivo
+        self.return_dados = return_dados
         self.arquivo_nome = 'Arquivo não selecionado'
         self.dados_df = pd.read_excel('arquivos/excel_teste2.xlsx', header=None)
         self.arquivo_caminho = 'Arquivo não selecionado'
@@ -104,8 +107,17 @@ class BotaoFilePicker:
             print(self.dados_df)
             print(self.arquivo_nome)
             print(self.arquivo_caminho)
-            self.page.update()
 
+        if self.return_nome != None:
+            self.return_nome.value = str(f'Nome: {self.arquivo_nome}')
+
+        if self.return_arquivo != None:
+            self.return_arquivo.value = str(f'Arquivo: {self.arquivo_caminho}')
+
+        if self.return_dados != None:
+            self.return_dados.value = str(f'Dados:\n{self.dados_df}')
+
+        self.page.update()
 
 
 
