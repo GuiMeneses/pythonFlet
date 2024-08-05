@@ -128,10 +128,3 @@ class BotaoFilePicker:
         self.page.update()
 
 
-
-
-
-
-
-
-
