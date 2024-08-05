@@ -1,6 +1,7 @@
 from flet import *
 import pandas as pd
 
+
 class TabelaDados:
     # Cria uma tabela de dados, 2 colunas com TextField() e uma com um Checkbox(), caso o Checkbox for verdadeiro o código interpretará a primeira coluna(coluna_novos_dados) como referências de célula, assim ela pegara os valores dessa celula da primeira planilha e passará para a segunda planilha na referências de célula que o usuário inseriu na segunda coluna.
     def __init__(self, page, coluna_principal, coluna_novos_dados, coluna_intervalos, coluna_VF):
@@ -104,9 +105,9 @@ class BotaoFilePicker:
             self.arquivo_nome = f"{e.files[0].name}"
             self.arquivo_caminho = f'{e.files[0].path}'
             # Caso queira verificar os dados.
-            print(self.dados_df)
-            print(self.arquivo_nome)
-            print(self.arquivo_caminho)
+            # print(self.dados_df)
+            # print(self.arquivo_nome)
+            # print(self.arquivo_caminho)
 
         if self.return_nome != None:
             self.return_nome.value = str(f'Nome: {self.arquivo_nome}')
@@ -115,7 +116,14 @@ class BotaoFilePicker:
             self.return_arquivo.value = str(f'Arquivo: {self.arquivo_caminho}')
 
         if self.return_dados != None:
-            self.return_dados.value = str(f'Dados:\n{self.dados_df}')
+            try:
+                self.page.remove_at(1)
+            except:
+                print('class BotaoFilePicker.pick_files_result: self.return_dados inexistente.')
+            try:
+                self.page.add(self.return_dados(arquivo_tabela=f'{self.arquivo_caminho}', return_TF=True))
+            except:
+                print(f'class BotaoFilePicker.pick_files_result: {self.arquivo_caminho}')
 
         self.page.update()
 
